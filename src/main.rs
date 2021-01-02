@@ -1,5 +1,6 @@
 use dkregistry::v2 as docker;
 use futures::stream::StreamExt;
+use semver::Version;
 use std::error::Error;
 use std::result::Result;
 
@@ -55,7 +56,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .into_iter()
         .map(Result::unwrap)
         .for_each(|tag| {
-            println!("{:?}", tag);
+            println!("{} {:?}", tag, Version::parse(&tag));
         });
 
     Ok(())
