@@ -49,6 +49,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let dclient = client.authenticate(&[&login_scope]).await?;
 
+    let mut sorted: Vec<Version> = Vec::new();
+
     dclient
         .get_tags("library/rust".as_ref(), Some(7))
         .collect::<Vec<_>>()
@@ -57,7 +59,18 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .map(Result::unwrap)
         .for_each(|tag| {
             println!("{} {:?}", tag, Version::parse(&tag));
+            let s = Version::parse(&tag);
+            match s {
+                Ok(s) => sorted.push(s),
+                _ => (),
+            }
         });
+
+    sorted.sort();
+    sorted.reverse();
+    for s in sorted {
+        println!("{:?}", s.to_string())
+    }
 
     Ok(())
 }
