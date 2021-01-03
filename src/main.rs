@@ -1,3 +1,6 @@
+//!
+#![warn(missing_debug_implementations, rust_2018_idioms, missing_docs)]
+
 use dkregistry::v2 as docker;
 use futures::stream::StreamExt;
 use semver::Version;
